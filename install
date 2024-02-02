@@ -1,0 +1,25 @@
+if [ $(realpath "$0") != "$HOME/.dotfiles/install" ]; then 
+  echo 'please install .dotfiles in the home directory' >&2
+  exit 1
+fi
+
+sudo apt install -y curl git locales netcat neovim openssh-client openssh-server powerline stow tmux zsh 
+
+# set up locale
+sudo locale-gen C.UTF-8
+
+# set up tmux
+echo "set-option -g default-shell $(which zsh)" | sudo tee /etc/tmux.conf >/dev/null
+mkdir -p $HOME/.tmux/plugins/tpm
+yes | git clone https://github.com/tmux-plugins/tpm.git $HOME/.tmux/plugins/tpm
+
+# set up omz
+yes | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+rm $HOME/.zshrc
+
+stow -d "$HOME/.dotfiles" -t "$HOME" basic
+
+# install nvim plugins
+vim --headless +PlugInstall +qall
+
+sudo chsh -s /usr/bin/zsh $(whoami)
