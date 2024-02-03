@@ -1,0 +1,3 @@
+#!/usr/bin/zsh
+
+tmux new -d -s tunnel '/usr/local/bin/ngrok tcp 22'

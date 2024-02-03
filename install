@@ -3,6 +3,9 @@ if [ $(realpath "$0") != "$HOME/.dotfiles/install" ]; then
   exit 1
 fi
 
+mkdir -p $HOME/.bin/facade
+mkdir -p $HOME/.config
+
 sudo apt install -y curl git locales netcat neovim openssh-client openssh-server powerline stow tmux zsh 
 
 # set up locale
