@@ -3,10 +3,18 @@ if [ $(realpath "$0") != "$HOME/.dotfiles/install" ]; then
   exit 1
 fi
 
-mkdir -p $HOME/.bin/facade
-mkdir -p $HOME/.config
+mkdir -p $HOME/.bin \
+         $HOME/.bin/facade \
+         $HOME/.config \
+         $HOME/.config/ngrok \
+         $HOME/.ssh \
+         $HOME/.ssh/config.d
 
-sudo apt install -y curl git locales netcat neovim openssh-client openssh-server powerline stow tmux zsh 
+sudo apt install -y curl git locales netcat neovim openssh-client openssh-server powerline python3-pip stow tmux zsh 
+
+python3 -m pip install --upgrade pip
+
+python3 -m pip install argparse
 
 # set up locale
 sudo locale-gen C.UTF-8

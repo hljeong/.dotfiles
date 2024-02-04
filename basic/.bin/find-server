@@ -1,0 +1,17 @@
+#!/usr/bin/zsh
+
+# exit if server is up
+check-server && exit
+
+address=$(get-server-address)
+
+# no server running
+if [[ -z "$address" ]]; then 
+  exit 1
+fi
+
+set-ssh-host server $USER $address
+
+# check again in case of ghost address
+check-server
+exit $?

@@ -1,4 +1,4 @@
-export PATH=$HOME/.bin:$HOME/.bin/facade:$PATH
+export PATH=$HOME/.bin:$HOME/.bin/facade:$HOME/.local/bin:$PATH
 export EDITOR=vim
 export VISUAL=$EDITOR
 

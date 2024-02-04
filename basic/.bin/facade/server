@@ -1,0 +1,8 @@
+#!/usr/bin/zsh
+set -e
+
+if ! find-server; then
+  echo no server running >&2
+  exit 1
+fi
+ssh -o StrictHostKeyChecking=no -o LogLevel=error server

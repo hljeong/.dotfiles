@@ -1,0 +1,4 @@
+#!/usr/bin/zsh
+set -e
+
+ssh -o StrictHostKeyChecking=no -o LogLevel=error server 'true' 2>/dev/null

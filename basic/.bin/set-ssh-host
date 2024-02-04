@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+
+import argparse, os
+from pathlib import Path
+
+def set_ssh_host(): 
+  parser = argparse.ArgumentParser(add_help=True)
+  parser.add_argument('host', type=str)
+  parser.add_argument('user', type=str)
+  parser.add_argument('address', type=str)
+  args = parser.parse_args()
+
+  host = args.host
+  user = args.user
+  address = args.address.split('/')[-1]
+  ip = address.split(':')[0]
+  port = address.split(':')[1] if ':' in address else None
+
+  file = Path(os.path.expandvars(f'$HOME/.ssh/config.d/{host}'))
+  file.parent.mkdir(parents=True, exist_ok=True)
+  with file.open('w') as config:
+    config.write(f'Host {host}\n')
+    config.write(f'  User {user}\n')
+    config.write(f'  HostName {ip}\n')
+    if port is not None: 
+      config.write(f'  Port {port}\n')
+    config.write(f'  ForwardAgent yes')
+    
+if __name__ == '__main__': 
+  set_ssh_host()

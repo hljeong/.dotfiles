@@ -1,3 +1,4 @@
 #!/usr/bin/zsh
 
-tmux kill-session -t 'tunnel'
+killall 'ngrok' 2>/dev/null
+tmux kill-session -t 'tunnel' 2>/dev/null
