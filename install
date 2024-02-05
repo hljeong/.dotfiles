@@ -10,9 +10,21 @@ mkdir -p $HOME/.bin \
          $HOME/.ssh \
          $HOME/.ssh/config.d
 
-sudo apt install -y curl git locales netcat neovim openssh-client openssh-server powerline python3-pip stow tmux zsh 
+sudo apt install -y curl \
+                    git \
+                    locales \
+                    make \
+                    netcat \
+                    neovim \
+                    openssh-client \
+                    openssh-server \
+                    powerline \
+                    python3-pip \
+                    stow \
+                    tmux \
+                    zsh
 
-python3 -m pip install --upgrade pip
+python3 -m pip install --no-warn-script-location --upgrade pip
 
 python3 -m pip install argparse
 
@@ -28,9 +40,15 @@ yes | git clone https://github.com/tmux-plugins/tpm.git $HOME/.tmux/plugins/tpm
 yes | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 rm $HOME/.zshrc
 
-stow -d "$HOME/.dotfiles" -t "$HOME" basic
+stow -d "$HOME/.dotfiles" -t "$HOME" --restow basic
+touch $HOME/.dotfiles/use-basic
 
 # install nvim plugins
 vim --headless +PlugInstall +qall
 
 sudo chsh -s /usr/bin/zsh $(whoami)
+
+touch $HOME/.dotfiles/basic-deps
+
+stow -d "$HOME/.dotfiles" -t "$HOME" --restow basic
+touch $HOME/.dotfiles/use-basic

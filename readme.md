@@ -1,6 +1,6 @@
 # .dotfiles
 
-## Installation
+## installation
 
 ```sh
 cd
@@ -12,7 +12,7 @@ su $(whoami)
 # acquire ngrok api key and save to $HOME/.config/ngrok/server.key
 ```
 
-## Install server package
+## install server package
 
 ```sh
 cd
