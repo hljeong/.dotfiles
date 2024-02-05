@@ -2,10 +2,10 @@
 
 STOW = stow -d "$$HOME/.dotfiles" -t "$$HOME"
 
-basic-deps: 
+deps: 
 > bash $$HOME/.dotfiles/install
 
-use: basic-deps
+use: deps
 > $(STOW) --restow basic
 > touch use
 
@@ -13,7 +13,7 @@ rm: rm-server
 > $(STOW) --delete basic 2>/dev/null
 > rm -f use
 
-server-deps: basic-deps
+server-deps: deps
 > $$HOME/.dotfiles/install-server
 
 use-server: use server-deps

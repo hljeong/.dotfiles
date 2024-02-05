@@ -41,14 +41,14 @@ yes | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/in
 rm $HOME/.zshrc
 
 stow -d "$HOME/.dotfiles" -t "$HOME" --restow basic
-touch $HOME/.dotfiles/use-basic
+touch $HOME/.dotfiles/use
 
 # install nvim plugins
 vim --headless +PlugInstall +qall
 
 sudo chsh -s /usr/bin/zsh $(whoami)
 
-touch $HOME/.dotfiles/basic-deps
+touch $HOME/.dotfiles/deps
 
 stow -d "$HOME/.dotfiles" -t "$HOME" --restow basic
-touch $HOME/.dotfiles/use-basic
+touch $HOME/.dotfiles/use
