@@ -1,11 +1,11 @@
 #!/usr/bin/zsh
 
 usage() {
-  echo "usage: $0 [-h] [-b duration]"
-  echo
-  echo 'optional arguments:'
-  echo '  -h, --help                       show this help message and exit'
-  echo '  -b duration, --backoff duration  wait for <duration> seconds before starting tunnel'
+  echo "usage: $0 [-h] [-b duration]" >&${1:-1}
+  echo >&${1:-1}
+  echo 'optional arguments:' >&${1:-1}
+  echo '  -h, --help                       show this help message and exit' >&${1:-1}
+  echo '  -b duration, --backoff duration  wait for <duration> seconds before starting tunnel' >&${1:-1}
 }
 
 has_argument() {
@@ -30,6 +30,7 @@ while [ $# -gt 0 ]; do
     -b | --backoff)
       if ! has_argument $@; then
         error 'backoff duration not specified'
+        usage 2
         exit 1
       fi
 
@@ -40,6 +41,7 @@ while [ $# -gt 0 ]; do
     ;;
     -*)
       error "invalid option: $1"
+      usage 2
       exit 1
     ;;
     *)

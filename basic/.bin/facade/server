@@ -2,14 +2,14 @@
 set -e
 
 usage() {
-  echo "usage: $0 [-h] [-n] [command]"
-  echo
-  echo 'optional positional argument:'
-  echo '  command        command to be run on the server'
-  echo
-  echo 'optional arguments:'
-  echo '  -h, --help     show this help message and exit'
-  echo '  -n, --no-wait  exit immediately if a server is not found'
+  echo "usage: $0 [-h] [-n] [command]" >&${1:-1}
+  echo >&${1:-1}
+  echo 'optional positional argument:' >&${1:-1}
+  echo '  command        command to be run on the server' >&${1:-1}
+  echo >&${1:-1}
+  echo 'optional arguments:' >&${1:-1}
+  echo '  -h, --help     show this help message and exit' >&${1:-1}
+  echo '  -n, --no-wait  exit immediately if a server is not found' >&${1:-1}
 }
 
 error() {
@@ -29,6 +29,7 @@ while [ $# -gt 0 ]; do
     ;;
     -*)
       error "invalid option: $1"
+      usage 2
       exit 1
     ;;
     *)
