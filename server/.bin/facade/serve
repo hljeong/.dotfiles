@@ -1,3 +1,55 @@
 #!/usr/bin/zsh
 
-tmux new -d 'stop-tunnel; start-tunnel'
+usage() {
+  echo "usage: $0 [-h] [-b duration]"
+  echo
+  echo 'optional arguments:'
+  echo '  -h, --help                       show this help message and exit'
+  echo '  -b duration, --backoff duration  wait for <duration> seconds before starting tunnel'
+}
+
+has_argument() {
+  [[ ("$1" == *=* && -n ${1#*=}) || ( ! -z "$2" && "$2" != -*) ]];
+}
+
+extract_argument() {
+  echo "${2:-${1#*=}}"
+}
+
+error() {
+  echo "$1" >&2
+}
+
+before_tunnel=''
+while [ $# -gt 0 ]; do
+  case $1 in
+    -h | --help)
+      usage
+      exit
+    ;;
+    -b | --backoff)
+      if ! has_argument $@; then
+        error 'backoff duration not specified'
+        exit 1
+      fi
+
+      duration=$(extract_argument $@)
+      shift
+
+      before_start+="sleep $duration;"
+    ;;
+    -*)
+      error "invalid option: $1"
+      exit 1
+    ;;
+    *)
+      break
+    ;;
+  esac
+  shift
+done
+
+command='stop-tunnel;'
+command+=$before_start
+command+='start-tunnel'
+tmux new -d $command

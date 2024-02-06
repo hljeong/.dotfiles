@@ -1,8 +1,50 @@
 #!/usr/bin/zsh
 set -e
 
-if ! find-server; then
-  echo no server running >&2
-  exit 1
+usage() {
+  echo "usage: $0 [-h] [-n] [command]"
+  echo
+  echo 'optional positional argument:'
+  echo '  command        command to be run on the server'
+  echo
+  echo 'optional arguments:'
+  echo '  -h, --help     show this help message and exit'
+  echo '  -n, --no-wait  exit immediately if a server is not found'
+}
+
+error() {
+  echo "$1" >&2
+}
+
+nowait=false
+command=''
+while [ $# -gt 0 ]; do
+  case $1 in
+    -h | --help)
+      usage
+      exit
+    ;;
+    -n | --no-wait)
+      nowait=true
+    ;;
+    -*)
+      error "invalid option: $1"
+      exit 1
+    ;;
+    *)
+      break
+    ;;
+  esac
+  shift
+done
+
+if $nowait && ! find-server; then
+  if ! find-server; then
+    echo no server running >&2
+    exit 1
+  fi
+else
+  while ! find-server; do :; done
 fi
-ssh -o StrictHostKeyChecking=no -o LogLevel=error server
+
+ssh -o StrictHostKeyChecking=no -o LogLevel=error server "$@"
