@@ -19,14 +19,9 @@ sudo apt install -y curl \
                     openssh-client \
                     openssh-server \
                     powerline \
-                    python3-pip \
                     stow \
                     tmux \
                     zsh
-
-python3 -m pip install --no-warn-script-location --upgrade pip
-
-python3 -m pip install argparse
 
 # set up locale
 sudo locale-gen C.UTF-8

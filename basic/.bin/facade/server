@@ -1,5 +1,4 @@
 #!/usr/bin/zsh
-set -e
 
 usage() {
   echo "usage: $0 [-h] [-n] [command]" >&${1:-1}
