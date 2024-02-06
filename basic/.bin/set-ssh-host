@@ -1,30 +1,72 @@
-#!/usr/bin/python3
+#!/usr/bin/zsh
 
-import argparse, os
-from pathlib import Path
+usage() {
+  echo "usage: $0 [-h] host user address" >&${1:-1}
+  echo >&${1:-1}
+  echo 'positional arguments:' >&${1:-1}
+  echo '  host' >&${1:-1}
+  echo '  user' >&${1:-1}
+  echo '  address' >&${1:-1}
+  echo >&${1:-1}
+  echo 'optional argument:' >&${1:-1}
+  echo '  -h, --help            show this help message and exit' >&${1:-1}
+}
 
-def set_ssh_host(): 
-  parser = argparse.ArgumentParser(add_help=True)
-  parser.add_argument('host', type=str)
-  parser.add_argument('user', type=str)
-  parser.add_argument('address', type=str)
-  args = parser.parse_args()
+has_argument() {
+  [[ ("$1" == *=* && -n ${1#*=}) || ( ! -z "$2" && "$2" != -*) ]];
+}
 
-  host = args.host
-  user = args.user
-  address = args.address.split('/')[-1]
-  ip = address.split(':')[0]
-  port = address.split(':')[1] if ':' in address else None
+extract_argument() {
+  echo "${2:-${1#*=}}"
+}
 
-  file = Path(os.path.expandvars(f'$HOME/.ssh/config.d/{host}'))
-  file.parent.mkdir(parents=True, exist_ok=True)
-  with file.open('w') as config:
-    config.write(f'Host {host}\n')
-    config.write(f'  User {user}\n')
-    config.write(f'  HostName {ip}\n')
-    if port is not None: 
-      config.write(f'  Port {port}\n')
-    config.write(f'  ForwardAgent yes')
-    
-if __name__ == '__main__': 
-  set_ssh_host()
+error() {
+  echo "$1" >&2
+}
+
+port=''
+while [ $# -gt 0 ]; do
+  case $1 in
+    -h | --help)
+      usage
+      exit
+    ;;
+    -*)
+      error "invalid option: $1"
+      exit 1
+    ;;
+    *)
+      break
+    ;;
+  esac
+  shift
+done
+
+if [ $# != 3 ]; then
+  error 'invalid positional arguments'
+  usage 2
+  exit 1
+fi
+
+host=$1
+user=$2
+address=$3
+
+ssh_config="$HOME/.ssh/config.d/$host"
+
+# strip protocol
+address=${address#(*://)}
+
+# strip port
+url=${address%(:*)}
+
+# strip url
+port=${address##(*:)}
+
+echo "Host $host" >$ssh_config
+echo "  User $user" >>$ssh_config
+echo "  HostName $url" >>$ssh_config
+if [[ -n "$port" ]]; then 
+  echo "  Port $port" >>$ssh_config
+fi
+echo '  ForwardAgent yes' >>$ssh_config
