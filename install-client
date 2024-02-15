@@ -1,0 +1,5 @@
+#!/usr/bin/zsh
+
+stow -d "$HOME/.dotfiles" -t "$HOME" --restow client
+
+touch $HOME/.dotfiles/client-deps
