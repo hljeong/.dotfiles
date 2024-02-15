@@ -20,3 +20,32 @@ cd
 # find authtoken at https://dashboard.ngrok.com/get-started/your-authtoken
 ngrok config add-authtoken <token>
 ```
+
+## install client package
+
+```sh
+cd
+.dotfiles/install-client
+```
+
+## usage
+
+to use basic configurations, run
+```sh
+dot use
+```
+
+to stop using basic configurations, run
+```sh
+dot rm
+```
+
+to use a package, run
+```sh
+dot use-<package>
+```
+
+to stop using a package, run
+```sh
+dot rm-<package>
+```
