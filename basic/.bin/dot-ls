@@ -1,0 +1,10 @@
+#!/usr/bin/zsh
+
+for dep in $(ls $HOME/.dotfiles | grep use); do
+  pkg=$(echo $dep | awk -F '-' '{print $2}' -)
+  if [[ -z "$pkg" ]]; then
+    echo '(basic)'
+  else
+    echo "$pkg"
+  fi
+done

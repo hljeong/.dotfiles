@@ -1,3 +1,5 @@
+set -e
+
 if [ $(realpath "$0") != "$HOME/.dotfiles/install" ]; then 
   echo 'please install .dotfiles in the home directory' >&2
   exit 1
@@ -9,6 +11,8 @@ mkdir -p $HOME/.bin \
          $HOME/.config/ngrok \
          $HOME/.ssh \
          $HOME/.ssh/config.d
+
+sudo apt update
 
 sudo apt install -y curl \
                     git \
