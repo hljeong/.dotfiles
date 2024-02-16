@@ -1,0 +1,71 @@
+#!/usr/bin/zsh
+
+usage() {
+  echo "usage: $0 [-h] <command> [arguments]" >&${1:-1}
+  echo >&${1:-1}
+  echo 'commands:' >&${1:-1}
+  echo '  use [packages]  use specified packages' >&${1:-1}
+  echo '  rm [packages]   remove specified packages' >&${1:-1}
+  echo '  ls              list packages in use' >&${1:-1}
+  echo >&${1:-1}
+  echo 'optional arguments:' >&${1:-1}
+  echo '  -h, --help      show this help message and exit' >&${1:-1}
+}
+
+error() {
+  echo "$1" >&2
+}
+
+use=true
+while [ $# -gt 0 ]; do
+  case $1 in
+    -h | --help)
+      usage
+      exit
+    ;;
+    -*)
+      error "invalid option: $1"
+      usage 2
+      exit 1
+    ;;
+    use)
+      shift
+      break
+    ;;
+    rm)
+      use=false
+      shift
+      break
+    ;;
+    ls)
+      for target in $(ls $HOME/.dotfiles | grep use); do
+        target=$(echo $dep | awk -F '-' '{print $2}' -)
+        if [[ -z "$pkg" ]]; then
+          echo '(basic)'
+        else
+          echo "$pkg"
+        fi
+      done
+      exit
+    ;;
+    *)
+      error "invalid command: $1"
+      usage 2
+      exit 1
+    ;;
+  esac
+  shift
+done
+
+alias dot-stow='make -C $HOME/.dotfiles --no-print-directory'
+if $use; then
+  while [ $# -gt 0 ]; do
+    dot-stow "use-$1"
+    shift
+  done
+else
+  while [ $# -gt 0 ]; do
+    dot-stow "rm-$1"
+    shift
+  done
+fi

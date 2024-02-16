@@ -5,6 +5,5 @@
 - add usnips
 - potentially add zoxide
 - dot script
-  - remove dot alias
-  - remove dot-ls script
-  - write dot script
+  - action needed indicator on installing deps
+- cherry-pick $ZSH/oh-my-zsh.sh

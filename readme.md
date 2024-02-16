@@ -15,7 +15,7 @@ su $(whoami)
 
 ```sh
 cd
-.dotfiles/install-server
+dot use server
 # find authtoken at https://dashboard.ngrok.com/get-started/your-authtoken
 ngrok config add-authtoken <token>
 ```
@@ -24,28 +24,23 @@ ngrok config add-authtoken <token>
 
 ```sh
 cd
-.dotfiles/install-client
+dot use client
 # acquire ngrok api key and save to $HOME/.config/ngrok/server.key
 ```
 
 ## usage
 
-to use basic configurations, run
+to use packages, run
 ```sh
-dot use
-```
-
-to stop using basic configurations, run
-```sh
-dot rm
-```
-
-to use a package, run
-```sh
-dot use-<package>
+dot use [packages]
 ```
 
 to stop using a package, run
 ```sh
-dot rm-<package>
+dot rm [packages]
+```
+
+to list packages currently in use, run
+```sh
+dot ls
 ```
