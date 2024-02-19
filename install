@@ -8,6 +8,8 @@ fi
 mkdir -p $HOME/.bin \
          $HOME/.bin/facade \
          $HOME/.config \
+         $HOME/.config/nvim \
+         $HOME/.config/nvim/luasnip \
          $HOME/.config/ngrok \
          $HOME/.ssh \
          $HOME/.ssh/config.d
@@ -19,13 +21,19 @@ sudo apt install -y curl \
                     locales \
                     make \
                     netcat \
-                    neovim \
                     openssh-client \
                     openssh-server \
                     powerline \
+                    python3-pip \
                     stow \
                     tmux \
                     zsh
+
+# get neovim
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+sudo rm -rf /opt/nvim
+sudo tar -C /opt -xzf nvim-linux64.tar.gz
+rm nvim-linux64.tar.gz
 
 # set up locale
 sudo locale-gen C.UTF-8
@@ -43,7 +51,8 @@ stow -d "$HOME/.dotfiles" -t "$HOME" --restow basic
 touch $HOME/.dotfiles/use
 
 # install nvim plugins
-vim --headless +PlugInstall +qall
+# vim --headless +PlugInstall +qall
+/opt/nvim-linux64/bin/nvim --headless +"lua require('lazy').update({ wait = true })" +qa
 
 sudo chsh -s /usr/bin/zsh $(whoami)
 
