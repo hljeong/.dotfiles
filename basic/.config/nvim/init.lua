@@ -111,6 +111,9 @@ vim.o.expandtab = true
 vim.wo.number = true
 vim.wo.relativenumber = true
 
+-- scroll
+vim.o.scrolloff = 8
+
 -- command line
 vim.o.shortmess = 'at'
 vim.o.shellcmdflag = '-ic' --[2]
