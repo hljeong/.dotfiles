@@ -112,7 +112,7 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 
 -- scroll
-vim.o.scrolloff = 8
+vim.o.scrolloff = 5
 
 -- command line
 vim.o.shortmess = 'at'
