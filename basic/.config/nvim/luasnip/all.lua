@@ -90,6 +90,20 @@ return {
   ),
   s(
     {
+      trig = 'icb',
+      dscr = 'backtick quotes',
+      wordTrig = false,
+      snippetType = 'autosnippet',
+    },
+    fmt(
+      '`{inner}`',
+      {
+        inner = i(1),
+      }
+    )
+  ),
+  s(
+    {
       trig = 'lkj',
       dscr = 'backslash',
       wordTrig = false,
