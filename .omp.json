@@ -1,0 +1,27 @@
+{
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "properties": {
+            "style": "unique"
+          },
+          "template": " {{ .Path }}",
+          "foreground": "#cda2b7",
+          "type": "path",
+          "style": "powerline"
+        },
+        {
+          "template": " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Major }}.{{ .Minor }}{{ end }}",
+          "foreground": "#b59cff",
+          "type": "python",
+          "style": "powerline"
+        }
+      ]
+    }
+  ],
+  "version": 3,
+  "final_space": true
+}

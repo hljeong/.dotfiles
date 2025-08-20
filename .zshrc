@@ -7,7 +7,7 @@ zstyle ':omz:update' mode reminder
 zstyle ':omz:*' aliases no
 source $ZSH/oh-my-zsh.sh
 
-eval "$(oh-my-posh init zsh --config ~/.agnoster.omp.json)"
+eval "$(oh-my-posh init zsh --config ~/.omp.json)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_COMPLETION_TRIGGER='...'
