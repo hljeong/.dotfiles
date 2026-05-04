@@ -1,5 +1,7 @@
+# options
 set -o ignoreeof
 
+# zsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME=''
 HYPHEN_INSENSITIVE='true'
@@ -7,18 +9,20 @@ zstyle ':omz:update' mode reminder
 zstyle ':omz:*' aliases no
 source $ZSH/oh-my-zsh.sh
 
+# omp
 eval "$(oh-my-posh init zsh --config ~/.omp.json)"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_COMPLETION_TRIGGER='...'
-
+# shell
 eval "$(dircolors -b $HOME/.dircolors)"
-
 eval "$(zoxide init zsh)"
 alias cd=z
 alias cdi=zi
 alias ls='ls --color=auto'
+alias ll='ls -lh'
+alias la='ls -a'
+alias lla='ll -a'
 
+# tmux
 if command -v tmux &>/dev/null &&
    [ -n "$PS1" ] &&
    [[ ! "$TERM" =~ screen ]] &&
@@ -28,18 +32,15 @@ if command -v tmux &>/dev/null &&
   tmux attach || tmux
 fi
 
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_COMPLETION_TRIGGER='...'
 
-# BEGIN opam configuration
-# This is useful if you're using opam as it adds:
-#   - the correct directories to the PATH
-#   - auto-completion for the opam binary
-# This section can be safely removed at any time if needed.
-[[ ! -r '/home/mphillotry/.opam/opam-init/init.zsh' ]] || source '/home/mphillotry/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
-# END opam configuration
-
+# executables
 alias vim='nvim'
 alias gr='rg'
 
+# git
 git_log_params='--pretty=format:"%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s" --date=short'
 alias gs='git status'
 alias gaa='git add -A'
@@ -51,5 +52,7 @@ alias gc='git commit'
 alias gcm='git commit -m'
 alias gri='git rebase -i'
 alias gp='git push'
+alias gpu='git pull'
 
+# python
 alias python='python3'
