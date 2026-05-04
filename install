@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+set -e
+
+dotfiles="$HOME/.dotfiles"
+
+link() {
+  local src="$1" dst="$2"
+  mkdir -p "$(dirname "$dst")"
+  rm -rf "$dst"
+  ln -s "$src" "$dst"
+}
+
+# zsh
+link "$dotfiles/zsh/.zshenv" "$HOME/.zshenv"
+link "$dotfiles/zsh/.zshrc" "$HOME/.zshrc"
+link "$dotfiles/zsh/.dircolors" "$HOME/.dircolors"
+link "$dotfiles/zsh/.omp.json" "$HOME/.omp.json"
+
+# tmux
+link "$dotfiles/tmux/.tmux.conf" "$HOME/.tmux.conf"
+
+# nvim
+mkdir -p "$HOME/.config/nvim"
+link "$dotfiles/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+link "$dotfiles/nvim/luasnip" "$HOME/.config/nvim/luasnip"
+link "$dotfiles/nvim/lsp" "$HOME/.config/nvim/lsp"
+
+# git
+link "$dotfiles/git/.gitconfig" "$HOME/.gitconfig"
+
+# bin
+mkdir -p "$HOME/.bin"
+link "$dotfiles/bin/c" "$HOME/.bin/c"
+
+echo "Linked all dotfiles!"
